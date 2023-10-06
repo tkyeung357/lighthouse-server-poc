@@ -1,0 +1,20 @@
+version: '3'
+services:
+  lhserver:
+    build:
+      context: docker-server
+      dockerfile: Dockerfile
+    ports:
+      - '80:9001'
+    volumes:
+      - ./lhci-data:/data
+  client:
+    build:
+      context: docker-client
+      dockerfile: Dockerfile
+    depends_on: 
+      - lhserver
+    volumes:
+      - ./lighthouserc.js:/home/lhci/lighthouserc.js
+      - ./sites.txt:/home/lhci/sites.txt
+
